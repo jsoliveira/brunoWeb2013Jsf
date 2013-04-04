@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Cadastro de Cidade</title>
+    </h:head>
+    <h:body>
+
+        <ui:include src="menu.xhtml"></ui:include>
+
+        <p:tabView id="tabCadastroCidade" widgetVar="tabCidade">
+            <p:tab id="tabCadastro" title="Cadastro">
+                <h:form id="formCidadeCadastro">
+                    <h:panelGrid columns="2">
+
+                        <h:outputLabel value="Codigo:" for="codigo" />
+                        <p:inputText id="codigo" value="#{cidadeBean.cidade.codigo}" title="Codigo" />
+
+                        <h:outputLabel value="Nome:" for="nome" />
+                        <p:inputText id="nome" value="#{cidadeBean.cidade.nome}" title="Nome" />
+
+                        <h:outputLabel value="Uf:" for="uf" />
+                        <p:selectOneMenu id="uf" value="#{cidadeBean.cidade.uf}" title="Uf" converter="UnidadeFederativaConverter">
+                            <f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+                            <f:selectItems value="#{unidadeFederativaBean.ufs}" var="ufSelect" itemValue="#{ufSelect}" itemLabel="#{ufSelect.nome}" />
+                        </p:selectOneMenu>
+
+                        <p:commandButton value="Salvar" action="#{cidadeBean.salvar}" update="@form,:tabCadastroCidade:formCidadeListagem" />
+
+                    </h:panelGrid>
+                </h:form>
+
+            </p:tab>
+
+            <p:tab id="tabListagem" title="Listagem">
+                <h:form id="formCidadeListagem">
+                    <p:dataTable value="#{cidadeBean.cidades}" var="c" id="listCidades">
+                        <p:column headerText="Codigo">
+                            <h:outputText value="#{c.codigo}"/>
+                        </p:column>
+
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{c.nome}"/>
+                        </p:column>
+
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{c.uf.nome}"/>
+                        </p:column>
+
+                        <p:column>
+                            <p:commandLink value="Alterar" action="#{cidadeBean.alterar(c)}" update=":tabCadastroCidade:formCidadeCadastro" onclick="tabCidade.select(0);" />
+                        </p:column>
+
+                        <p:column>
+                            <p:commandLink value="Deletar" action="#{cidadeBean.deletar(c)}" update="@form,:tabCadastroCidade:formCidadeCadastro" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:tab>
+        </p:tabView>
+
+    </h:body>
+</html>
+

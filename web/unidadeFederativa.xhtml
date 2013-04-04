@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Cadastro de UF</title>
+    </h:head>
+    <h:body>
+
+        <ui:include src="menu.xhtml"></ui:include>
+
+        <h:form>
+            <fieldset>
+                <legend>Cadastro de Uf</legend>
+                <h:panelGrid columns="2">
+
+                    <h:outputLabel value="Codigo:" for="codigo" />
+                    <h:inputText id="codigo" value="#{unidadeFederativaBean.uf.codigo}" title="Codigo" />
+
+                    <h:outputLabel value="Nome:" for="nome" />
+                    <h:inputText id="nome" value="#{unidadeFederativaBean.uf.nome}" title="Nome" />
+
+                    <h:outputLabel value="Sigla:" for="sigla" />
+                    <h:inputText id="sigla" value="#{unidadeFederativaBean.uf.sigla}" title="Sigla" />
+
+                    <h:commandButton value="Salvar" action="#{unidadeFederativaBean.salvar}" />
+                </h:panelGrid>
+            </fieldset>
+        </h:form>
+
+
+        <h:form>
+            <fieldset>
+                <legend>Listagem de Uf</legend>
+                
+                <h:dataTable value="#{unidadeFederativaBean.ufs}" var="uf">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Codigo"/>
+                        </f:facet>
+                        <h:outputText value="#{uf.codigo}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nome"/>
+                        </f:facet>
+                        <h:outputText value="#{uf.nome}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Sigla"/>
+                        </f:facet>
+                        <h:outputText value="#{uf.sigla}"/>
+                    </h:column>
+                    
+                    <h:column>
+                        <h:commandLink value="Alterar" action="#{unidadeFederativaBean.alterar(uf)}" />
+                    </h:column>
+                    
+                    <h:column>
+                        <h:commandLink value="Remover" action="#{unidadeFederativaBean.remover(uf)}" />
+                    </h:column>
+                    
+                </h:dataTable>
+                
+            </fieldset>
+        </h:form>
+
+
+
+    </h:body>
+</html>
+
