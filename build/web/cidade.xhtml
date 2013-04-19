@@ -24,13 +24,14 @@
                         <p:inputText id="nome" value="#{cidadeBean.cidade.nome}" title="Nome" />
 
                         <h:outputLabel value="Uf:" for="uf" />
-                        <p:selectOneMenu id="uf" value="#{cidadeBean.cidade.uf}" title="Uf" converter="UnidadeFederativaConverter">
-                            <f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+                        <p:selectOneMenu id="uf" value="#{cidadeBean.cidade.uf}" converter="UnidadeFederativaConverter">
+                            <f:selectItem noSelectionOption="true"  itemLabel="Selecione" />
                             <f:selectItems value="#{unidadeFederativaBean.ufs}" var="ufSelect" itemValue="#{ufSelect}" itemLabel="#{ufSelect.nome}" />
                         </p:selectOneMenu>
-
-                        <p:commandButton value="Salvar" action="#{cidadeBean.salvar}" update="@form,:tabCadastroCidade:formCidadeListagem" />
-
+                        
+                        <p:commandButton value="Salvar"  action="#{cidadeBean.salvar}" update="@form,:tabCadastroCidade:formCidadeListagem" />
+                        
+                        <p:growl id="messages" />
                     </h:panelGrid>
                 </h:form>
 

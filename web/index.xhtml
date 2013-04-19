@@ -5,8 +5,9 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
+    
     <h:head>
-        <title>Cadastro de Cidade</title>
+        <title>Cadastro de Usuário</title>
     </h:head>
 
     <h:body>
@@ -29,6 +30,12 @@
 
                         <h:outputLabel value="Senha" for="pass" />
                         <p:password id="pass" value="#{usuarioBean.u.senha}" />
+                        
+                        <h:outputLabel value="E-Mail" for="mail" />
+                        <p:inputText id="mail" value="#{usuarioBean.u.email}" />
+                        
+                        <h:outputLabel value="CPF" for="cpf" />
+                        <p:inputMask id="cpf" value="#{usuarioBean.u.cpf}" mask="999.999.999-99" />
 
                         <h:outputLabel value="Nascimento" for="nasc" />
                         <p:calendar id="nasc" value="#{usuarioBean.u.nascimento}" pattern="dd/MM/yyyy">
@@ -58,6 +65,14 @@
                         <p:column headerText="Usuario">
                             #{u.usuario}
                         </p:column>
+                        
+                        <p:column headerText="E-Mail">
+                            #{u.email}
+                        </p:column>
+                        
+                        <p:column headerText="CPF">
+                            #{u.cpf}
+                        </p:column>
 
                         <p:column headerText="Nascimento">
                             <h:outputText value="#{u.nascimento}"> 
@@ -69,7 +84,7 @@
                             <p:commandLink value="Alterar" action="#{usuarioBean.setU(u)}" ajax="true" update=":tabCadastroUsuario:formCadUsuario" onclick="tabUsuario.select(0);" />
                         </p:column>
 
-                        <p:column>
+                        <p:column> 
                             <p:commandLink value="Deletar" type="button" onclick="confirmDel.show();" action="#{usuarioBean.setU(u)}" />
 
                             <p:confirmDialog id="confimDelDialog" message="Deseja Realmente deletar este Usuário ? " header="Deleção" severity="alert" widgetVar="confirmDel">  

@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class UnidadeFederativa implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long codigo;
     
     @Column(length=2, unique=true)

@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cadastro de Produtos</title>
+    </h:head>
+    <h:body>
+
+        <ui:include src="menu.xhtml"></ui:include>
+
+        <p:tabView id="tbProduto" widgetVar="tbProdutoWD">
+            <p:tab id="tabCadastro" title="Cadastro">
+                <h:form id="formCadProduto">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Código" for="cod" />
+                        <p:inputText id="cod" value="#{produtoBean.produto.id}" />
+
+                        <h:outputLabel value="Nome" for="nome" />
+                        <p:inputText id="nome" value="#{produtoBean.produto.nome}" />
+
+                        <h:outputLabel value="Detalhes" for="det" />
+                        <p:inputTextarea id="det" value="#{produtoBean.produto.detalhes}" />
+                    
+                        <h:outputLabel value="Categoria:" for="categoria" />
+                        <h:panelGrid columns="2">
+                            <p:selectOneMenu id="categoria" binding="#{catBind}" converter="CategoriaConverter">
+                                <f:selectItem noSelectionOption="true"  itemLabel="Selecione" />
+                                <f:selectItems value="#{categoriaBean.categorias}" var="catSelect" itemValue="#{catSelect}" itemLabel="#{catSelect.nome}" />
+                            </p:selectOneMenu>
+                            
+                            <p:commandButton actionListener="#{produtoBean.produto.categorias.add(catBind.value)}" value="ADD" update=":tbProduto:formCadProduto:mess, :tbProduto:formCadProduto:tbListCatSelected" />
+                        </h:panelGrid>
+
+                        <p:growl id="mess" />
+                        
+                        <p:commandButton value="Salvar" update="@form, :tbProduto:formListProduto" action="#{produtoBean.salvar}" />
+                    </h:panelGrid>
+
+                    <p:dataTable value="#{produtoBean.produto.categorias}" var="catSelected" id="tbListCatSelected">
+                        <p:column headerText="Código">
+                            #{catSelected.id}
+                        </p:column>
+                        
+                        <p:column headerText="Nome">
+                            #{catSelected.nome}
+                        </p:column>
+                        
+                        <p:column headerText="Nome">
+                            <p:commandLink value="Remover" onclick="confirmDelCatSelected.show();" />
+                            
+                            <p:confirmDialog id="confimDelDialogCatSelected" message="Deseja remover o produto desta categoria ? " header="Deleção" severity="alert" widgetVar="confirmDelCatSelected">  
+                                <p:commandButton id="opSim" value="Sim" update=":tbProduto:formCadProduto:tbListCatSelected" onclick="confirmDelCatSelected.hide()" action="#{produtoBean.produto.categorias.remove(catSelected)}" />  
+                                <p:commandButton id="opNão" value="Não" onclick="confirmDelCatSelected.hide()" />   
+                            </p:confirmDialog> 
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:tab>
+
+            <p:tab id="tabListagem" title="Listagem">
+                <h:form id="formListProduto">
+                    <p:dataTable value="#{produtoBean.produtos}" var="prod">
+                        <p:column headerText="Código">
+                            #{prod.id}
+                        </p:column>
+
+                        <p:column headerText="Nome">
+                            #{prod.nome}
+                        </p:column>
+
+                        <p:column>
+                            <p:commandLink value="Alterar" action="#{produtoBean.setProduto(prod)}" update=":tbProduto:formCadProduto" onclick="tbProdutoWD.select(0);" />
+                        </p:column>
+
+                        <p:column>
+                            <p:commandLink value="Remover" action="#{produtoBean.setProduto(prod)}" onclick="confirmDel.show();" />
+
+                            <p:confirmDialog id="confimDelDialog" message="Deseja Realmente deletar este Produto ? " header="Deleção" severity="alert" widgetVar="confirmDel">  
+                                <p:commandButton id="opSim" value="Sim" update="@form, :tbProduto:formCadProduto" onclick="confirmDel.hide()" action="#{produtoBean.deletar()}" />  
+                                <p:commandButton id="opNão" value="Não" update="@form, :tbProduto:formCadProduto" onclick="confirmDel.hide()" action="#{produtoBean.limpar()}" />   
+                            </p:confirmDialog> 
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:tab>
+        </p:tabView>
+    </h:body>
+</html>
+

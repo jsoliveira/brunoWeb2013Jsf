@@ -16,18 +16,24 @@ public class UnidadeFederativaConverter implements Converter {
     
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
-        if (string == null || string.isEmpty()) return null;
-        
-        return ufDao.findOne(Long.parseLong(string));
+        try {
+            System.out.println("---->" + ufDao.findOne(Long.parseLong(string)).getNome());
+            return ufDao.findOne(Long.parseLong(string));
+        } catch (NumberFormatException ex) {
+            return null;
+        }
     }
 
     @Override
     public String getAsString(FacesContext fc, UIComponent uic, Object o) {
         UnidadeFederativa uf = (UnidadeFederativa) o;
         
-        if (uf == null || uf.getCodigo() == null) return null;
-        
-        return String.valueOf(uf.getCodigo());
+        try {
+            System.out.println(uf.getCodigo());
+            return String.valueOf(uf.getCodigo());
+        } catch (Exception e) {
+            return null;
+        }
     }
     
 }

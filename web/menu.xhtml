@@ -15,11 +15,18 @@
     <h:body>
         <h:form id="barraDeFerramentas">  
             <p:toolbar>  
-                <p:toolbarGroup align="left">  
+                <p:toolbarGroup align="left">   
+                    
                     <p:menuButton value="Cadastros">  
-                        <p:menuitem value="Cadastro de Usuario" action="#{menuBean.toUsuario()}" ajax="false" icon="ui-icon-pencil" />  
+                        <p:menuitem value="Cadastro de Usuario" 
+                                    action="#{menuBean.toUsuario()}" 
+                                    ajax="false" icon="ui-icon-pencil" />  
+                        
                         <p:menuitem value="Cadastro de Cidade" action="#{menuBean.toCidade()}" ajax="false" icon="ui-icon-pencil" />  
                         <p:menuitem value="Cadastro de UF" action="#{menuBean.toUf()}" ajax="false" icon="ui-icon-pencil" />   
+                        
+                        <p:menuitem value="Cadastro de Categoria" action="#{menuBean.toCategoria()}" ajax="false" icon="ui-icon-pencil" />   
+                        <p:menuitem value="Cadastro de Produto" action="#{menuBean.toProduto()}" ajax="false" icon="ui-icon-pencil" />   
                     </p:menuButton>  
                 </p:toolbarGroup>  
             </p:toolbar>  

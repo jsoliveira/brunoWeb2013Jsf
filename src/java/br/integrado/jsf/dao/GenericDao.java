@@ -15,7 +15,6 @@ public abstract class GenericDao< T extends Serializable> {
     }
 
     public T findOne(final Long id) {
-        //return entityManager.find(clazz, id);
         return (T) entityManager.find(clazz, id);
     }
 

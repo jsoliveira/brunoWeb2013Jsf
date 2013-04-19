@@ -4,18 +4,18 @@ import br.integrado.jsf.dao.CidadeDao;
 import br.integrado.jsf.dao.UnidadeFederativaDao;
 import br.integrado.jsf.model.Cidade;
 import br.integrado.jsf.model.UnidadeFederativa;
+import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 @ManagedBean
 @ViewScoped
-public class CidadeBean {
+public class CidadeBean implements Serializable {
     
     private Cidade cidade = new Cidade();
     
     private CidadeDao cDao = new CidadeDao();
-    private UnidadeFederativaDao ufDao = new UnidadeFederativaDao();
     
     private List<Cidade> cidades;
     
@@ -59,5 +59,4 @@ public class CidadeBean {
         this.cidades = (this.cidades == null) ? cDao.findAll() : this.cidades;
         return cidades;
     }
-    
 }

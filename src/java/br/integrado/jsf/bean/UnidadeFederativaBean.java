@@ -2,13 +2,14 @@ package br.integrado.jsf.bean;
 
 import br.integrado.jsf.dao.UnidadeFederativaDao;
 import br.integrado.jsf.model.UnidadeFederativa;
+import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 @ManagedBean
 @ViewScoped
-public class UnidadeFederativaBean {
+public class UnidadeFederativaBean implements Serializable {
     
     
     private UnidadeFederativa uf = new UnidadeFederativa();
@@ -25,8 +26,8 @@ public class UnidadeFederativaBean {
         setUf(uf);
     }
     
-    public void remover (UnidadeFederativa uf) {
-        ufDao.delete(uf);
+    public void remover () {
+        ufDao.delete(this.uf);
         limpar();
     }
     

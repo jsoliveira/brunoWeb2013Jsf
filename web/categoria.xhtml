@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Cadastro de Categorias</title>
+    </h:head>
+    <h:body>
+        
+        <ui:include src="menu.xhtml"></ui:include>
+        
+        <p:tabView id="tbCategoria" widgetVar="tbCategoriaWD">
+            <p:tab title="Cadastro" id="tabCadCategoria">
+                <h:form id="formCadCategoria">
+                    <h:panelGrid columns="2">
+                        
+                        <p:outputLabel for="codigo" value="Código" />
+                        <p:inputText id="codigo" value="#{categoriaBean.categoria.id}" />
+                        
+                        <p:outputLabel for="nome" value="Nome" />
+                        <p:inputText id="nome" value="#{categoriaBean.categoria.nome}" />
+                        
+                        <p:outputLabel for="desc" value="Descrição" />
+                        <p:inputTextarea id="desc" value="#{categoriaBean.categoria.descricao}" />
+                        
+                        <p:commandButton value="Salvar" action="#{categoriaBean.salvar}" update="@form, :tbCategoria:formListCategoria" />
+                    </h:panelGrid>
+                    
+                    
+                    
+                </h:form>
+            </p:tab>
+            
+            <p:tab title="Listagem" id="tabListCategoria">
+                <h:form id="formListCategoria">
+                    <p:dataTable value="#{categoriaBean.categorias}" var="cat">
+                        <p:column headerText="Código">
+                            #{cat.id}
+                        </p:column>
+                        
+                        <p:column headerText="Nome">
+                            #{cat.nome}
+                        </p:column>
+                        
+                        <p:column>
+                            <p:commandLink value="Alterar" action="#{categoriaBean.setCategoria(cat)}" update=":tbCategoria:formCadCategoria" onclick="tbCategoriaWD.select(0);" />
+                        </p:column>
+                        
+                        <p:column>
+                            <p:commandLink value="Remover" action="#{categoriaBean.setCategoria(cat)}" update=":tbCategoria:formCadCategoria" onclick="confirmDel.show();" />
+                            
+                            <p:confirmDialog id="confimDelDialog" message="Deseja Realmente deletar este Categoria ? " header="Deleção" severity="alert" widgetVar="confirmDel">  
+                                <p:commandButton id="opSim" value="Sim" update="@form, :tbCategoria:formCadCategoria" onclick="confirmDel.hide()" action="#{categoriaBean.deletar()}" />  
+                                <p:commandButton id="opNão" value="Não" update="@form, :tbCategoria:formCadCategoria" onclick="confirmDel.hide()" action="#{categoriaBean.limpar()}" />   
+                            </p:confirmDialog> 
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:tab>
+        </p:tabView>
+        
+    </h:body>
+</html>
+

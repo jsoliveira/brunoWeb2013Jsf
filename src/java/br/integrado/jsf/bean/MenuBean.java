@@ -5,16 +5,25 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 public class MenuBean {
 
+    private static final String cmd = "?faces-redirect=true";
+    
     public String toUsuario () {
-        return "index?faces-redirect=true"; 
+        return "index" + cmd; 
     }
     
     public String toCidade () {
-        return "cidade?faces-redirect=true";
+        return "cidade" + cmd; 
     }
 
     public String toUf () {
-        return "unidadeFederativa?faces-redirect=true";
+        return "unidadeFederativa" + cmd; 
     }
     
+    public String toCategoria () {
+        return "categoria" + cmd; 
+    }
+    
+    public String toProduto () {
+        return "produto" + cmd; 
+    }
 }

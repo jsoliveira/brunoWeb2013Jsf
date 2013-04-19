@@ -14,37 +14,36 @@ public class UsuarioBean {
 
     private Usuario u = new Usuario();
     private UsuarioDao uDao = new UsuarioDao();
-    
     private List<Usuario> usuarios;
-    
-    public void salvar () {
+
+    public void salvar() {
         uDao.save(u);
         setU(new Usuario());
-        clear ();
+        clear();
     }
-    
-    public void clear () {
+
+    public void clear() {
         setU(null);
         setU(new Usuario());
         this.usuarios = null;
         this.usuarios = getUsuarios();
     }
-    
-    public void deletar (Usuario u) {
+
+    public void deletar(Usuario u) {
         uDao.delete(u);
-        clear ();
+        clear();
     }
-    
-    public void deletarNovo () {
+
+    public void deletarNovo() {
         uDao.delete(this.u);
-        clear ();
+        clear();
     }
-    
-    public List<Usuario> getUsuarios () {
+
+    public List<Usuario> getUsuarios() {
         this.usuarios = (this.usuarios == null) ? uDao.findAll() : this.usuarios;
         return this.usuarios;
     }
-    
+
     public Usuario getU() {
         return u;
     }
@@ -52,6 +51,4 @@ public class UsuarioBean {
     public void setU(Usuario u) {
         this.u = u;
     }
-    
 }
-
