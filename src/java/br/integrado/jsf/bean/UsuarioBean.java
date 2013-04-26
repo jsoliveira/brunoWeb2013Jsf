@@ -2,15 +2,17 @@ package br.integrado.jsf.bean;
 
 import br.integrado.jsf.dao.UsuarioDao;
 import br.integrado.jsf.model.Usuario;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 
 @ManagedBean
 @ViewScoped
-public class UsuarioBean {
+public class UsuarioBean implements Serializable {
 
     private Usuario u = new Usuario();
     private UsuarioDao uDao = new UsuarioDao();

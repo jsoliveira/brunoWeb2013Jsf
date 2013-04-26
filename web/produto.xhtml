@@ -49,13 +49,8 @@
                             #{catSelected.nome}
                         </p:column>
                         
-                        <p:column headerText="Nome">
-                            <p:commandLink value="Remover" onclick="confirmDelCatSelected.show();" />
-                            
-                            <p:confirmDialog id="confimDelDialogCatSelected" message="Deseja remover o produto desta categoria ? " header="Deleção" severity="alert" widgetVar="confirmDelCatSelected">  
-                                <p:commandButton id="opSim" value="Sim" update=":tbProduto:formCadProduto:tbListCatSelected" onclick="confirmDelCatSelected.hide()" action="#{produtoBean.produto.categorias.remove(catSelected)}" />  
-                                <p:commandButton id="opNão" value="Não" onclick="confirmDelCatSelected.hide()" />   
-                            </p:confirmDialog> 
+                        <p:column>
+                            <p:commandLink value="Remover" update=":tbProduto:formCadProduto:tbListCatSelected" action="#{produtoBean.produto.categorias.remove(catSelected)}" />
                         </p:column>
                     </p:dataTable>
                 </h:form>

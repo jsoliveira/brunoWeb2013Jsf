@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "tb_produto")
@@ -20,13 +21,12 @@ public class Produto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotNull
+    @NotNull(message="Nome é Obrigatório.")
     private String nome;
     
-    @NotNull
+    @NotNull(message="Detalhes é Obrigatório.")
     private String detalhes;
     
-    @Size(min=1, message="Selecione ao menos uma categoria.")
     @ManyToMany
     private List<Categoria> categorias = new ArrayList<Categoria>();
 
@@ -58,12 +58,8 @@ public class Produto implements Serializable {
         return categorias;
     }
 
-    public void setCategorias(List<Categoria> categorias) {
-        this.categorias = categorias;
-    }
-    
-    public void addCategoria (Categoria c) {
-        this.categorias.add(c);
+    public void setCategorias(Categoria categorias) {
+        this.categorias.add(categorias);
     }
 
     @Override

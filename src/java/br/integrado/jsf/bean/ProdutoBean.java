@@ -3,11 +3,15 @@ package br.integrado.jsf.bean;
 import br.integrado.jsf.dao.ProdutoDao;
 import br.integrado.jsf.model.Categoria;
 import br.integrado.jsf.model.Produto;
+import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.FacesException;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 @ViewScoped
 @ManagedBean
@@ -20,8 +24,18 @@ public class ProdutoBean implements Serializable {
     private List<Produto> produtos = new ArrayList<Produto>();
     
     public void salvar () {
-        pDao.save(produto);
-        limpar();
+        if (!produto.getCategorias().isEmpty()) {
+            pDao.save(produto);
+            limpar();
+        } else {
+            erroRelCategoria ();
+        }
+    }
+    
+    public void erroRelCategoria () {
+        String msg = "Você deve relacionar seu produto a pelo menos uma categoria.";
+        FacesContext fc = FacesContext.getCurrentInstance();
+        fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
     }
     
     public void deletar () {
@@ -45,14 +59,6 @@ public class ProdutoBean implements Serializable {
     public List<Produto> getProdutos() {
         produtos = (produtos.isEmpty()) ? pDao.findAll() : produtos;
         return produtos;
-    }
-
-    public ProdutoDao getpDao() {
-        return pDao;
-    }
-
-    public void setpDao(ProdutoDao pDao) {
-        this.pDao = pDao;
     }
     
 }

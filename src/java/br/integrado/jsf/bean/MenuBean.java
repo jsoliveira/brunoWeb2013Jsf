@@ -26,4 +26,20 @@ public class MenuBean {
     public String toProduto () {
         return "produto" + cmd; 
     }
+    
+    public String toAluno () {
+        return "aluno" + cmd; 
+    }
+    
+    public String toTurma () {
+        return "turma" + cmd; 
+    }
+    
+    public String toTela () {
+        return "tela" + cmd; 
+    }
+    
+    public String toUsuarioTela () {
+        return "usuarioTela" + cmd; 
+    }
 }

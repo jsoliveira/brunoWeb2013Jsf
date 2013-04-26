@@ -41,6 +41,8 @@ public class Usuario implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private Estado estado = Estado.ATIVO;
     
+    @Lob
+    private byte[] foto;
 
     public Usuario() {
     }
@@ -107,6 +109,36 @@ public class Usuario implements Serializable {
 
     public void setEstado(Estado estado) {
         this.estado = estado;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 11 * hash + (this.codigo != null ? this.codigo.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Usuario other = (Usuario) obj;
+        if (this.codigo != other.codigo && (this.codigo == null || !this.codigo.equals(other.codigo))) {
+            return false;
+        }
+        return true;
     }
     
 }

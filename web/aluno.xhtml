@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <title>Cadastro de Aluno</title>
+    </h:head>
+    <h:body>
+
+        <ui:include src="menu.xhtml"></ui:include>
+
+        <p:tabView id="tabViewAluno" widgetVar="tabViewAlunoWD">
+
+            <p:tab id="tabCadastro" title="Cadastro">
+                <h:form id="formCadastroAluno">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Id:" for="id" />
+                        <p:inputText id="id" value="#{alunoBean.aluno.idAluno}" title="Id" />
+
+                        <h:outputLabel value="RA:" for="RA" />
+                        <p:inputText id="RA" value="#{alunoBean.aluno.RA}" title="RA" />
+
+                        <h:outputLabel value="Nome:" for="nome" />
+                        <p:inputText id="nome" value="#{alunoBean.aluno.nome}" title="Nome" />
+
+                        <h:outputLabel value="Telefone:" for="telefone" />
+                        <p:inputMask id="telefone" value="#{alunoBean.aluno.telefone}" title="Telefone" mask="(99) 9999-9999" />
+                        
+                        <h:outputLabel value="Turma:" for="turma" />
+                        <h:panelGrid columns="2">
+                            <p:selectOneMenu id="turma" binding="#{turmaSelected}" converter="TurmaConverter">
+                                <f:selectItem noSelectionOption="true"  itemLabel="Selecione" />
+                                <f:selectItems value="#{turmaBean.turmas}" var="tSelected" itemLabel="#{tSelected.nome}" itemValue="#{tSelected}" />
+                            </p:selectOneMenu>
+                            
+                            <p:commandButton value="Adicionar" actionListener="#{alunoBean.aluno.turmas.add(turmaSelected.value)}" update=":tabViewAluno:formCadastroAluno:mess, :tabViewAluno:formCadastroAluno:tbListagemTurmaSelected" />
+                        </h:panelGrid>
+                        
+                        <p:growl id="mess" />
+                        
+                        <p:commandButton value="Salvar" action="#{alunoBean.salvar}" update="@form, :tabViewAluno:formListagemAluno" />
+                    </h:panelGrid>
+
+                    <p:dataTable var="t" value="#{alunoBean.aluno.turmas}" id="tbListagemTurmaSelected">
+                        <p:column headerText="Código">
+                            #{t.idTurma}
+                        </p:column>
+                        
+                        <p:column headerText="Nome">
+                            #{t.nome}
+                        </p:column>
+                        
+                        <p:column>
+                            <p:commandLink value="Remover" action="#{alunoBean.aluno.turmas.remove(t)}"  update=":tabViewAluno:formCadastroAluno:tbListagemTurmaSelected" />
+                        </p:column>
+                        
+                    </p:dataTable>
+                    
+                </h:form>
+            </p:tab>
+
+            <p:tab id="tabListagem" title="Listagem">
+                <h:form id="formListagemAluno">
+                    <p:dataTable value="#{alunoBean.alunos}" var="a" id="tbListagemAluno">
+                        <p:column headerText="Código">
+                            #{a.idAluno}
+                        </p:column>
+
+                        <p:column headerText="RA">
+                            #{a.RA}
+                        </p:column>
+
+                        <p:column headerText="Nome">
+                            #{a.nome}
+                        </p:column>
+
+                        <p:column headerText="Telefone">
+                            #{a.telefone}
+                        </p:column>
+
+                        <p:column>
+                            <p:commandLink value="Alterar" update=":tabViewAluno:formCadastroAluno" onclick="tabViewAlunoWD.select(0);" action="#{alunoBean.setAluno(a)}" />
+                        </p:column>
+
+                        <p:column>
+                            <p:commandLink value="Remover" action="#{alunoBean.setAluno(a)}" onclick="confirmDel.show()" />
+
+                            <p:confirmDialog id="confimDelDialog" message="Deseja Realmente deletar este Categoria ? " header="Deleção" severity="alert" widgetVar="confirmDel">  
+                                <p:commandButton id="opSim" value="Sim" update="@form, :tabViewAluno:formCadastroAluno" onclick="confirmDel.hide()" action="#{alunoBean.deletar}" />  
+                                <p:commandButton id="opNão" value="Não" update="@form, :tabViewAluno:formCadastroAluno" onclick="confirmDel.hide()" action="#{alunoBean.limpar}" />   
+                            </p:confirmDialog> 
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:tab>
+
+        </p:tabView>
+
+
+    </h:body>
+</html>
+
