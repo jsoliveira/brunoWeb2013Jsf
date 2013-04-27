@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cadastro de Tela</title>
+    </h:head>
+    <h:body>
+
+        <ui:include src="menu.xhtml"></ui:include>
+
+        <p:tabView id="tabViewTela" widgetVar="tabViewTelaWD">
+
+            <p:tab id="tabCadastroTela" title="Cadastro">
+                <h:form id="formCadTela">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Id:" for="id" />
+                        <p:inputText id="id" value="#{telaBean.t.id}" title="Id" />
+                        <h:outputLabel value="Nome:" for="nome" />
+                        <p:inputText id="nome" value="#{telaBean.t.nome}" title="Nome" />
+
+                        <p:commandButton value="Salvar" action="#{telaBean.salvar()}" update="@form, :tabViewTela:formListTela" />
+                    </h:panelGrid>
+                </h:form>
+            </p:tab>
+
+            <p:tab id="tabListagemTela" title="Listagem">
+                <h:form id="formListTela">
+                    <p:dataTable id="tbListagemTela" value="#{telaBean.telas}" var="t">
+                        <p:column headerText="Código">
+                            #{t.id}
+                        </p:column>
+                        
+                        <p:column headerText="Nome">
+                            #{t.nome}
+                        </p:column>
+                        
+                        <p:column>
+                            <p:commandLink value="Alterar" action="#{telaBean.setT(t)}" onclick="tabViewTelaWD.select(0);" update=":tabViewTela:formCadTela" />
+                        </p:column>
+                        
+                        <p:column>
+                            <p:commandLink value="Remover" action="#{telaBean.setT(t)}" onclick="confirmDel.show();" />
+                            
+                            <p:confirmDialog id="confimDelDialog" message="Deseja Realmente deletar este Categoria ? " header="Deleção" severity="alert" widgetVar="confirmDel">  
+                                <p:commandButton id="opSim" value="Sim" update="@form, :tabViewTela:formCadTela" onclick="confirmDel.hide()" action="#{telaBean.deletar}" />  
+                                <p:commandButton id="opNão" value="Não" update="@form, :tabViewTela:formCadTela" onclick="confirmDel.hide()" action="#{telaBean.limpar}" />   
+                            </p:confirmDialog> 
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:tab>
+
+        </p:tabView>
+
+    </h:body>
+</html>
+

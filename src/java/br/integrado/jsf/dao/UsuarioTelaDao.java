@@ -3,7 +3,6 @@ package br.integrado.jsf.dao;
 import br.integrado.jsf.model.Usuario;
 import br.integrado.jsf.model.UsuarioTela;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioTelaDao extends GenericDao<UsuarioTela> implements Serializable {

@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <title>Liberação de Telas para Usuário</title>
+    </h:head>
+    <h:body>
+
+        <ui:include src="menu.xhtml"></ui:include>
+
+        <p:tabView id="tabViewUsuarioTela" widgetVar="tabViewUsuarioTelaWD">
+            <p:tab id="tabCadastroUsuarioTela" title="Cadastros">
+                <h:form id="formCadastroUsuarioTela">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Usuário: " for="idUsuario" />
+                        <p:selectOneMenu id="idUsuario" value="#{usuarioTelaBean.usuarioTela.usuario}" converter="UsuarioConverter"  binding="${usuarioSelected}">
+                            <f:selectItem noSelectionOption="true"  itemLabel="Selecione" />
+                            <f:selectItems value="#{usuarioBean.usuarios}" var="usuarioSelect" itemLabel="#{usuarioSelect.nome}" itemValue="#{usuarioSelect}" />
+                            
+                            <p:ajax 
+                                event="change" 
+                                update=":tabViewUsuarioTela:formCadastroUsuarioTela:tbListaTelasUsuarioEspecifico"
+                                partialSubmit="true" />
+                            
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="Tela: " for="idTela" />
+                        <p:selectOneMenu id="idTela" value="#{usuarioTelaBean.usuarioTela.tela}" converter="TelaConverter" >
+                            <f:selectItem noSelectionOption="true"  itemLabel="Selecione" />
+                            <f:selectItems value="#{telaBean.telas}" var="telaSelect" itemLabel="#{telaSelect.nome}" itemValue="#{telaSelect}" />
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="Incluir: " for="checkInserir" />
+                        <p:selectBooleanCheckbox id="checkInserir" value="#{usuarioTelaBean.usuarioTela.inserir}" />
+
+                        <h:outputLabel value="Alterar: " for="checkAlterar" />
+                        <p:selectBooleanCheckbox id="checkAlterar" value="#{usuarioTelaBean.usuarioTela.alterar}" />
+
+                        <h:outputLabel value="Remover: " for="checkRemover" />
+                        <p:selectBooleanCheckbox id="checkRemover" value="#{usuarioTelaBean.usuarioTela.remover}" />
+
+                        <h:outputLabel value="Listar: " for="checkListar" />
+                        <p:selectBooleanCheckbox id="checkListar" value="#{usuarioTelaBean.usuarioTela.listar}" />
+
+                        <p:commandButton value="Salvar" action="#{usuarioTelaBean.salvar}" update="@form, :tabViewUsuarioTela:formListagemUsarioTela" />
+                    </h:panelGrid>
+
+                    <p:dataTable value="#{usuarioTelaBean.usuariosTelaUsuario}" var="ut" id="tbListaTelasUsuarioEspecifico">
+                        <p:column headerText="Tela">
+                            #{ut.tela.nome}
+                        </p:column>
+
+                        <p:column headerText="Inserir">
+                            #{ut.inserir}
+                        </p:column>
+
+                        <p:column headerText="Alterar">
+                            #{ut.alterar}
+                        </p:column>
+
+                        <p:column headerText="Remover">
+                            #{ut.remover}
+                        </p:column>
+
+                        <p:column headerText="Listar">
+                            #{ut.listar}
+                        </p:column>
+
+                        <p:column>
+                            <p:commandLink value="Remover" action="#{usuarioTelaBean.setUsuarioTela(ut)}" onclick="confirmDel.show();" />
+
+                            <p:confirmDialog id="confimDelDialog" message="Deseja Realmente deletar este Produto ? " header="Deleção" severity="alert" widgetVar="confirmDel">  
+                                <p:commandButton id="opSim" value="Sim" update="@form, :tabViewUsuarioTela:formListagemUsarioTela" onclick="confirmDel.hide()" action="#{usuarioTelaBean.deletar()}" />  
+                                <p:commandButton id="opNão" value="Não" update="@form, :tabViewUsuarioTela:formListagemUsarioTela" onclick="confirmDel.hide()" action="#{usuarioTelaBean.limpar()}" />   
+                            </p:confirmDialog> 
+                        </p:column>
+                    </p:dataTable>
+
+                </h:form>
+            </p:tab>
+
+            <p:tab id="tabListagemUsuarioTela" title="Listagem">
+                <h:form id="formListagemUsarioTela">
+                    <f:view>
+                        <h:form>
+                            <p:dataTable value="#{usuarioTelaBean.usuariosTela}" var="ut">
+                                <p:column headerText="Usuário">
+                                    #{ut.usuario.nome}
+                                </p:column>
+
+                                <p:column headerText="Tela">
+                                    #{ut.tela.nome}
+                                </p:column>
+
+                                <p:column headerText="Inserir">
+                                    #{ut.inserir}
+                                </p:column>
+
+                                <p:column headerText="Alterar">
+                                    #{ut.alterar}
+                                </p:column>
+
+                                <p:column headerText="Remover">
+                                    #{ut.remover}
+                                </p:column>
+
+                                <p:column headerText="Listar">
+                                    #{ut.listar}
+                                </p:column>
+
+                                <p:column>
+                                    <p:commandLink value="Remover" action="#{usuarioTelaBean.setUsuarioTela(ut)}" onclick="confirmDel.show();" />
+
+                                    <p:confirmDialog id="confimDelDialog" message="Deseja Realmente deletar este Produto ? " header="Deleção" severity="alert" widgetVar="confirmDel">  
+                                        <p:commandButton id="opSim" value="Sim" update="@form, :tabViewUsuarioTela:formListagemUsarioTela" onclick="confirmDel.hide()" action="#{usuarioTelaBean.deletar()}" />  
+                                        <p:commandButton id="opNão" value="Não" update="@form, :tabViewUsuarioTela:formListagemUsarioTela" onclick="confirmDel.hide()" action="#{usuarioTelaBean.limpar()}" />   
+                                    </p:confirmDialog> 
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </f:view>
+
+                </h:form>
+            </p:tab>
+        </p:tabView>
+    </h:body>
+</html>
+
