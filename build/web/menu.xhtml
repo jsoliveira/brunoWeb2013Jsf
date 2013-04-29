@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:head>
         <style>
             .ui-widget,     
@@ -31,7 +32,18 @@
                         <p:menuitem value="Cadastro de Turma" action="#{menuBean.toTurma()}" ajax="false" icon="ui-icon-pencil" />   
                         <p:menuitem value="Cadastro de Tela" action="#{menuBean.toTela()}" ajax="false" icon="ui-icon-pencil" />   
                         <p:menuitem value="Cadastro de Telas do Usuário" action="#{menuBean.toUsuarioTela()}" ajax="false" icon="ui-icon-pencil" />   
+                    </p:menuButton>    
+                    
+                    <p:menuButton value="Cadastros do Usuário">  
+                        <c:forEach items="#{telaBean.telas}" var="t">
+                            <p:menuitem 
+                                    value="#{t.nome}" 
+                                    action="#{menuBean.goTo(t.action)}" 
+                                    ajax="false" 
+                                    icon="ui-icon-pencil" />  
+                        </c:forEach>
                     </p:menuButton>  
+                
                 </p:toolbarGroup>  
             </p:toolbar>  
         </h:form>

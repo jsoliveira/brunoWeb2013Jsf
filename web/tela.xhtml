@@ -19,8 +19,12 @@
                     <h:panelGrid columns="2">
                         <h:outputLabel value="Id:" for="id" />
                         <p:inputText id="id" value="#{telaBean.t.id}" title="Id" />
+                        
                         <h:outputLabel value="Nome:" for="nome" />
                         <p:inputText id="nome" value="#{telaBean.t.nome}" title="Nome" />
+                        
+                        <h:outputLabel value="Action:" for="action" />
+                        <p:inputText id="action" value="#{telaBean.t.action}" title="Action" />
 
                         <p:commandButton value="Salvar" action="#{telaBean.salvar()}" update="@form, :tabViewTela:formListTela" />
                     </h:panelGrid>
@@ -36,6 +40,10 @@
                         
                         <p:column headerText="Nome">
                             #{t.nome}
+                        </p:column>
+                        
+                        <p:column headerText="Nome">
+                            #{t.action}
                         </p:column>
                         
                         <p:column>

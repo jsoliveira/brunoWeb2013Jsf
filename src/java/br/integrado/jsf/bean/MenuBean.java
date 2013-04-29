@@ -7,6 +7,10 @@ public class MenuBean {
 
     private static final String cmd = "?faces-redirect=true";
     
+    public String goTo (String action) {
+        return action + cmd;
+    }
+    
     public String toUsuario () {
         return "index" + cmd; 
     }

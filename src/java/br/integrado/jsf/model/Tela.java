@@ -16,6 +16,7 @@ public class Tela implements Serializable {
     private Long id;
     
     private String nome;
+    private String action;
 
     public Long getId() {
         return id;
@@ -33,6 +34,14 @@ public class Tela implements Serializable {
         this.nome = nome;
     }
 
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;
